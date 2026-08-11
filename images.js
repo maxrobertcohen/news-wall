@@ -3,6 +3,10 @@
 // Each item: { src, href }  (src = screenshot image, href = article link to open on click)
 window.NEWS_ITEMS = [
   {
+    src: "img/2026-08-11-francesca-hong-wisconsin-aoc-bernie-progressive.png",
+    href: "https://www.politico.com/news/2026/08/11/francesca-hong-wisconsin-aoc-bernie-progressive-01031466"
+  },
+  {
     src: "img/2026-08-11-europe-heatwave.png",
     href: "https://www.nytimes.com/2026/08/11/weather/europe-extreme-heat-wave-uk-france-spain.html"
   },
