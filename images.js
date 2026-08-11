@@ -3,6 +3,10 @@
 // Each item: { src, href }  (src = screenshot image, href = article link to open on click)
 window.NEWS_ITEMS = [
   {
+    src: "img/2026-08-11-russia-ukraine-war-striking-russia-cards.png",
+    href: "https://apnews.com/projects/russia-ukraine-war-striking-russia-cards/"
+  },
+  {
     src: "img/2026-08-11-francesca-hong-wisconsin-aoc-bernie-progressive.png",
     href: "https://www.politico.com/news/2026/08/11/francesca-hong-wisconsin-aoc-bernie-progressive-01031466"
   },
