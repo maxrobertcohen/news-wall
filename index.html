@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>&nbsp;</title>
+<style>
+  :root { --gap: 6px; --row: 260px; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #111; }
+  #wall {
+    padding: var(--gap);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
+  .row { display: flex; gap: var(--gap); }
+  .tile {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: #1b1b1b;
+    flex: 0 0 auto;
+  }
+  .tile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .tile.sample::after {
+    content: "sample";
+    position: absolute; top: 6px; left: 6px;
+    font: 10px/1 system-ui, sans-serif; letter-spacing: .08em;
+    color: #fff8; background: #0006; padding: 3px 5px; border-radius: 3px;
+  }
+  /* smaller target row on phones */
+  @media (max-width: 640px) { :root { --row: 170px; } }
+</style>
+</head>
+<body>
+<div id="wall" data-ref="wall"></div>
+
+<script src="images.js"></script>
+<script>
+(function () {
+  const wall = document.getElementById("wall");
+  const items = window.NEWS_ITEMS || [];
+
+  // 1) Load every image to learn its natural aspect ratio (order preserved).
+  function measure(item) {
+    return new Promise((resolve) => {
+      const im = new Image();
+      im.onload  = () => resolve({ ...item, ar: im.naturalWidth / im.naturalHeight });
+      im.onerror = () => resolve({ ...item, ar: 1 });
+      im.src = item.src;
+    });
+  }
+
+  // 2) Justified-rows layout: greedily fill rows left-to-right in chronological
+  //    order, then scale each row to the exact container width. Newest is the
+  //    very first tile (top-left); everything else flows down in reading order.
+  function layout(measured) {
+    const gap = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--gap")) || 6;
+    const targetH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--row")) || 260;
+    const containerW = wall.clientWidth - gap * 2; // padding on both sides
+
+    wall.innerHTML = "";
+    let row = [], arSum = 0;
+
+    function flush(isLast) {
+      if (!row.length) return;
+      // width if drawn at targetH: sum(ar)*targetH + gaps
+      const gaps = gap * (row.length - 1);
+      const naturalW = arSum * targetH;
+      // scale factor so the row fills the width (don't upscale a lonely last row too much)
+      let h = targetH;
+      if (!isLast || naturalW + gaps >= containerW) {
+        h = (containerW - gaps) / arSum;
+      }
+      const rowEl = document.createElement("div");
+      rowEl.className = "row";
+      row.forEach((it) => {
+        const a = document.createElement("a");
+        a.className = "tile" + (it.sample ? " sample" : "");
+        a.href = it.href || "#";
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.style.width = (it.ar * h) + "px";
+        a.style.height = h + "px";
+        const img = document.createElement("img");
+        img.src = it.src;
+        img.loading = "lazy";
+        img.alt = "";
+        a.appendChild(img);
+        rowEl.appendChild(a);
+      });
+      wall.appendChild(rowEl);
+      row = []; arSum = 0;
+    }
+
+    measured.forEach((it) => {
+      row.push(it); arSum += it.ar;
+      const gaps = gap * (row.length - 1);
+      if (arSum * targetH + gaps >= containerW) flush(false);
+    });
+    flush(true);
+  }
+
+  let measured = [];
+  Promise.all(items.map(measure)).then((m) => {
+    measured = m;
+    layout(measured);
+  });
+
+  let t;
+  window.addEventListener("resize", () => {
+    clearTimeout(t);
+    t = setTimeout(() => { if (measured.length) layout(measured); }, 120);
+  });
+})();
+</script>
+</body>
+</html>
