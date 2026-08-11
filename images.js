@@ -3,6 +3,10 @@
 // Each item: { src, href }  (src = screenshot image, href = article link to open on click)
 window.NEWS_ITEMS = [
   {
+    src: "img/2026-08-10-iran-no-talks.png",
+    href: "https://www.news18.com/amp/world/iran-rules-out-talks-with-trump-says-will-wait-until-his-term-ends-in-2029-10264715.html"
+  },
+  {
     src: "img/2026-08-10-trump-plane-ruse.png",
     href: "https://www.nytimes.com/2026/08/10/us/politics/trump-plane-ruse.html"
   },
