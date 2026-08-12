@@ -3,6 +3,10 @@
 // Each item: { src, href }  (src = screenshot image, href = article link to open on click)
 window.NEWS_ITEMS = [
   {
+    src: "img/2026-08-12-iran-military-base-attacks-us-munitions.png",
+    href: "https://www.nytimes.com/2026/08/11/us/politics/iran-military-base-attacks-us-munitions.html?smid=nytcore-ios-share"
+  },
+  {
     src: "img/2026-08-12-6022928-obama-mocks-trump-gold-oval-office.png",
     href: "https://thehill.com/blogs/in-the-know/6022928-obama-mocks-trump-gold-oval-office/"
   },
