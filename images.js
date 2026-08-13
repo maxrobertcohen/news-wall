@@ -3,6 +3,10 @@
 // Each item: { src, href }  (src = screenshot image, href = article link to open on click)
 window.NEWS_ITEMS = [
   {
+    src: "img/2026-08-13-democratic-socialism-dsa-elections-primaries.png",
+    href: "https://www.nytimes.com/2026/08/13/magazine/democratic-socialism-dsa-elections-primaries.html?smid=nytcore-ios-share"
+  },
+  {
     src: "img/2026-08-12-three-killed-attacks-ships-red-sea-gulf-sources-say-2026-08-.png",
     href: "https://www.reuters.com/world/china/three-killed-attacks-ships-red-sea-gulf-sources-say-2026-08-11/"
   },
