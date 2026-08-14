@@ -3,6 +3,10 @@
 // Each item: { src, href }  (src = screenshot image, href = article link to open on click)
 window.NEWS_ITEMS = [
   {
+    src: "img/2026-08-14-families-sailors-aircraft-carriers-horrific-conditions-iran-war.png",
+    href: "https://newrepublic.com/post/214376/families-sailors-aircraft-carriers-horrific-conditions-iran-war"
+  },
+  {
     src: "img/2026-08-14-luigi-mangione-plea-unitedhealthcare-ceo.png",
     href: "https://apnews.com/article/luigi-mangione-plea-unitedhealthcare-ceo-3b8a5bb41589c9f5f4775dba2beea66f?utm_source=app&utm_medium=iOS_share&utm_campaign=copy_link"
   },
