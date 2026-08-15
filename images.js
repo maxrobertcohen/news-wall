@@ -3,6 +3,10 @@
 // Each item: { src, href }  (src = screenshot image, href = article link to open on click)
 window.NEWS_ITEMS = [
   {
+    src: "img/2026-08-15-aircraft-carriers-trump-china-pacific-iran-war.png",
+    href: "https://apnews.com/article/aircraft-carriers-trump-china-pacific-iran-war-87cfb838de8c13464fa3cab1840ad87d"
+  },
+  {
     src: "img/2026-08-14-families-sailors-aircraft-carriers-horrific-conditions-iran-war.png",
     href: "https://newrepublic.com/post/214376/families-sailors-aircraft-carriers-horrific-conditions-iran-war"
   },
