@@ -23,11 +23,23 @@
     flex: 0 0 auto;
   }
   .tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  #tally {
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    font: 11px/34px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    letter-spacing: .06em;
+    color: #2f2f2f;
+    -webkit-user-select: none; user-select: none;
+    transition: color .35s ease;
+  }
+  #tally:hover { color: #6a6a6a; }
   @media (max-width: 640px) { :root { --row: 170px; } }
 </style>
 </head>
 <body>
 <div id="wall" data-ref="wall"></div>
+<div id="tally" data-ref="tally"></div>
 
 <script>
 (function () {
@@ -119,6 +131,60 @@
   window.addEventListener("resize", () => {
     clearTimeout(t);
     t = setTimeout(() => { if (measured.length) layout(measured); }, 120);
+  });
+})();
+</script>
+<script>
+/* --- visit tally -------------------------------------------------------
+   Static site, so the counts live on Abacus (abacus.jasoncameron.dev),
+   a free no-signup counter API. Two counters in namespace "maximg-org":
+     visits  = total pageviews   uniques = distinct browsers
+   Counted ONCE per browser session (sessionStorage), so the wall's 30s
+   auto-refresh and plain reloads never inflate it. "uniques" is gated on
+   a localStorage flag so a given browser only ever adds 1.
+   Any failure (service down, ad blocker) leaves the footer blank.
+--------------------------------------------------------------------- */
+(function () {
+  var API = "https://abacus.jasoncameron.dev";
+  var NS  = "maximg-org";
+  var el  = document.getElementById("tally");
+  if (!el) return;
+
+  function store(kind) {                 // storage can throw in some privacy modes
+    try { return kind === "s" ? window.sessionStorage : window.localStorage; }
+    catch (e) { return null; }
+  }
+  function flag(s, k) { try { return s && s.getItem(k); } catch (e) { return null; } }
+  function mark(s, k) { try { s && s.setItem(k, "1"); } catch (e) {} }
+
+  // counted already this session/browser? then just read, don't increment
+  function ask(key, alreadyCounted) {
+    var verb = alreadyCounted ? "get" : "hit";
+    return fetch(API + "/" + verb + "/" + NS + "/" + key, { mode: "cors", cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { return j && typeof j.value === "number" ? j.value : null; })
+      .catch(function () { return null; });
+  }
+
+  var ss = store("s"), ls = store("l");
+  var seenSession = !!flag(ss, "nw_session");
+  var seenEver    = !!flag(ls, "nw_visitor");
+
+  Promise.all([
+    ask("visits",  seenSession),
+    ask("uniques", seenEver || seenSession)
+  ]).then(function (res) {
+    if (!seenSession) mark(ss, "nw_session");
+    if (!seenEver)    mark(ls, "nw_visitor");
+
+    var visits = res[0], uniques = res[1];
+    if (visits === null && uniques === null) return;   // stay silent, no error text
+
+    var bits = [];
+    if (visits !== null)  bits.push(visits.toLocaleString()  + (visits  === 1 ? " visit"   : " visits"));
+    if (uniques !== null) bits.push(uniques.toLocaleString() + (uniques === 1 ? " visitor" : " visitors"));
+    bits.push("since 18 Aug 2026");
+    el.textContent = bits.join("  \u00b7  ");
   });
 })();
 </script>
