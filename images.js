@@ -3,6 +3,10 @@
 // Each item: { src, href }  (src = screenshot image, href = article link to open on click)
 window.NEWS_ITEMS = [
   {
+    src: "img/2026-08-18-shocking-number-of-gen-z-shut-ins-report-zero-face-to-face-h.png",
+    href: "https://nypost.com/2026/08/17/us-news/shocking-number-of-gen-z-shut-ins-report-zero-face-to-face-human-interactions-per-day/"
+  },
+  {
     src: "img/2026-08-15-abraham-lincoln-middle-east-mental-health-town-hall-meeting.png",
     href: "https://www.stripes.com/theaters/us/2026-08-11/abraham-lincoln-middle-east-mental-health-town-hall-meeting-22506344.html"
   },
