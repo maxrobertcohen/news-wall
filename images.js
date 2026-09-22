@@ -3,6 +3,10 @@
 // Each item: { src, href }  (src = screenshot image, href = article link to open on click)
 window.NEWS_ITEMS = [
   {
+    src: "img/2026-09-22-trump-mamdani-gracie-mansion-feel-something.jpeg",
+    href: "https://hellgatenyc.com/trump-mamdani-gracie-mansion-feel-something?ref=morning-spew-newsletter&attribution_id=6ab275a4c790920001b1f7bd&attribution_type=post"
+  },
+  {
     src: "img/2026-09-13-ddoy7mxagj0.png",
     href: "https://www.instagram.com/reel/DdOy7mXAgJ0"
   },
